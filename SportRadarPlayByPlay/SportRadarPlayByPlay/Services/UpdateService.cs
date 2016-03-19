@@ -38,7 +38,9 @@ namespace SportRadarPlayByPlay.Services
             // do something here
             var foo = gameData;
 
-            //SendTwilioUpdate(text, link);
+            var text = String.Format("{0} {1} {2}", DateTime.Now.ToShortTimeString(), "Canceled", "Data");
+            var link = String.Format("http://www.mlb.com/r/game?gid={0}&sport_code=mlb", game.MLBId);
+            SendTwilioUpdate(text, link);
         }
 
         private void SendTwilioUpdate(string text, string link)
