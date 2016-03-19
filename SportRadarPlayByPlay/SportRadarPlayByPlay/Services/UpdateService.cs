@@ -35,10 +35,13 @@ namespace SportRadarPlayByPlay.Services
             var request = new RestRequest("games/{id}/pbp.json?api_key=" + apiKey, Method.GET);
             request.AddUrlSegment("id", game.Id); // replaces matching token in request.Resource
             IRestResponse<RootObject> gameData = client.Execute<RootObject>(request);
-            // do something here
-            var foo = gameData;
 
-            var text = String.Format("{0} {1} {2}", DateTime.Now.ToShortTimeString(), "Canceled", "Data");
+            var text = String.Format("{0} {1} {2} {3}", 
+                DateTime.Now.ToShortTimeString(), 
+                game.GameDescription, 
+                gameData.Data.game.status, 
+                "0 on 0 outs Matt Kemp due up" // figure this out from data
+            );
             var link = String.Format("http://www.mlb.com/r/game?gid={0}&sport_code=mlb", game.MLBId);
             SendTwilioUpdate(text, link);
         }

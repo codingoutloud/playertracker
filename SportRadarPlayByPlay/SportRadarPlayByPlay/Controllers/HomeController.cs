@@ -29,7 +29,7 @@ namespace SportRadarPlayByPlay.Controllers
 
         public ActionResult Index()
         {
-            var activeGameModel = metsNationals;
+            var activeGameModel = rockiesPadres;
             var updateService = new UpdateService();
             updateService.Start(activeGameModel);
 
