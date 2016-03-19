@@ -42,6 +42,15 @@ namespace SportRadarPlayByPlay
 
             foreach (var phoneNumber in phoneNumbers)
             {
+                if (msg.Length >= 140)
+                {
+                    var desiredMsg = msg;
+                    msg = msg.Substring(0, 139) + "!";
+                    System.Diagnostics.Debug.Assert(msg.Length == 140);
+
+                    response += String.Format("Truncated message to {0} to '{1}' instead of desired '{2}'", phoneNumber, msg, desiredMsg);
+                }
+
                 var r = client.SendMessage(TwilioPhoneNumber, phoneNumber, msg);
                 if (r.RestException != null)
                 {                  
