@@ -18,6 +18,9 @@ namespace SportRadarPlayByPlay
 #endif
         private static List<string> GetDestinationPhoneNumbers()
         {
+            if (SportRadarPlayByPlay.Controllers.HomeController.AlertablePhoneNumbers.Count > 0)
+                return SportRadarPlayByPlay.Controllers.HomeController.AlertablePhoneNumbers;
+
             var phoneNumbers = new List<string>();
             phoneNumbers.Add("+17814679575");
 
@@ -31,7 +34,8 @@ namespace SportRadarPlayByPlay
             var phoneNumbers = GetDestinationPhoneNumbers();
 
             var client = new TwilioRestClient(TwilioAccountSid, TwilioAuthToken);
-
+            var machine = Environment.MachineName;
+            msg = String.Format("/{0} on {1}/ {2}", SportRadarPlayByPlay.Controllers.HomeController.AlertablePhoneNumbers.Count, machine, msg);
             msg += " " + url;
 
             var response = String.Format("Begin processing at {0}\n", DateTime.Now.ToLongTimeString());

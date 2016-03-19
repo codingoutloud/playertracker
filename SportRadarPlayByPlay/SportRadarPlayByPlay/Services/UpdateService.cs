@@ -12,7 +12,7 @@ namespace SportRadarPlayByPlay.Services
     {
         private string resourceUrl = "http://api.sportradar.us/mlb-t5";
         private string apiKey = "arhq4rqppwe4jwa6kyzg2mzc";
-        private double frequencyInSeconds = 600000;
+        private TimeSpan alertFrequency = TimeSpan.FromMinutes(1);
         Timer timer;
 
         public void Start(GameModel game) 
@@ -21,7 +21,7 @@ namespace SportRadarPlayByPlay.Services
                 e => GetRealTimeGameData(game),
                 null,
                 TimeSpan.Zero,
-                TimeSpan.FromSeconds(frequencyInSeconds));
+                alertFrequency);
         }
 
         public void Stop()

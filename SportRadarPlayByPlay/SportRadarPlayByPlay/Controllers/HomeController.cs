@@ -11,6 +11,8 @@ namespace SportRadarPlayByPlay.Controllers
 {
     public class HomeController : Controller
     {
+        public static List<string> AlertablePhoneNumbers = new List<string>();
+
         //1:05 game
         GameModel metsNationals = new GameModel 
         {
@@ -36,6 +38,26 @@ namespace SportRadarPlayByPlay.Controllers
             return View(activeGameModel);
         }
 
+        [HttpPost]
+        public ActionResult Register(string from, String body)
+        {
+            var phoneNumber = from;
+            var message = body;
+
+            System.Diagnostics.Debug.WriteLine("Adding phone number: " + phoneNumber);
+
+            AlertablePhoneNumbers.Add(phoneNumber);
+
+            System.Diagnostics.Debug.WriteLine("Number of alertable phone numbers: " + AlertablePhoneNumbers.Count);
+
+            return View();
+#if false
+            var response = new TwilioResponse();
+            response.Message(outputMessage);
+
+            return TwiML(response);
+#endif
+        }
 
         public ActionResult About()
         {
