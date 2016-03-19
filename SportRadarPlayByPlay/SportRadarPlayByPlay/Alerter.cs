@@ -29,7 +29,7 @@ namespace SportRadarPlayByPlay
 
             msg += " " + url;
 
-            var response = "";
+            var response = String.Format("Begin processing at {0}\n", DateTime.Now.ToLongTimeString());
 
             foreach (var phoneNumber in phoneNumbers)
             {

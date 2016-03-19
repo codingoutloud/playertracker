@@ -47,7 +47,7 @@ namespace SportRadarPlayByPlay.Services
         {
             // plug in call to Bill's thing here
             var response = Alerter.AlertUsers(link, text);
-
+            System.Diagnostics.Debug.WriteLine(response);
         }
     }
 }
