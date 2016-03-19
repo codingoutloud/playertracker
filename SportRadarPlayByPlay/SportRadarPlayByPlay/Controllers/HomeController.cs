@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using SportRadarPlayByPlay.Models;
+using SportRadarPlayByPlay.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,18 +24,13 @@ namespace SportRadarPlayByPlay.Controllers
             MLBId = "2016_03_19_colmlb_sdnmlb_1",
             GameDescription = "Rockies at Nationals"
         };
-        string apiKey = "arhq4rqppwe4jwa6kyzg2mzc";
         string mlbGameDayUrlTemplate = "http://www.mlb.com/r/game?gid={0}&sport_code=mlb";
 
-        string resourceUrl = "http://api.sportradar.us/mlb-t5";
         public ActionResult Index()
         {
             var activeGameModel = metsNationals;
-
-            var client = new RestClient(resourceUrl);
-            var request = new RestRequest("games/{id}/pbp.json?api_key=" + apiKey, Method.GET);
-            //request.AddUrlSegment("id", activeGameModel.Id); // replaces matching token in request.Resource
-            //IRestResponse<RootObject> gameData = client.Execute<RootObject>(request);
+            var updateService = new UpdateService();
+            updateService.Start(activeGameModel);
 
             return View(activeGameModel);
         }
