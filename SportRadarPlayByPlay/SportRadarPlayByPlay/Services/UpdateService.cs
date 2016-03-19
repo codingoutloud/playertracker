@@ -46,6 +46,8 @@ namespace SportRadarPlayByPlay.Services
         private void SendTwilioUpdate(string text, string link)
         {
             // plug in call to Bill's thing here
+            var response = Alerter.AlertUsers(link, text);
+
         }
     }
 }
