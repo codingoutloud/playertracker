@@ -1,5 +1,5 @@
 ﻿using System;
-#if true
+using System.Collections.Generic;
 using Twilio;
 
 namespace SportRadarPlayByPlay
@@ -11,24 +11,40 @@ namespace SportRadarPlayByPlay
         const string TwilioSourcePhoneNumberSid = "PN8cbfc7f39bacccb03ad7bca48ba35591";
         const string TwilioPhoneNumber = "+17812096258";
 
+        private static List<string> GetDestinationPhoneNumbers()
+        {
+            var phoneNumbers = new List<string>();
+            phoneNumbers.Add("+17814679575");
+
+            return phoneNumbers;
+        }
+   
         public static string AlertUsers(string url, string msg)
         {
             System.Diagnostics.Debug.Assert(Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute));
 
+            var phoneNumbers = GetDestinationPhoneNumbers();
+
             var client = new TwilioRestClient(TwilioAccountSid, TwilioAuthToken);
-            var destinationPhone = "+17814679575";
 
-            msg += " http://blog.codingoutloud.com";
-            string[] gameLinks = { "http://blog.codingoutloud.com", "http://bostonazure.org" };
+            msg += " " + url;
 
-            var response = client.SendMessage(TwilioPhoneNumber, destinationPhone, msg); // , gameLinks);
+            var response = "";
 
-            destinationPhone = "+17812238770";
-            response = client.SendMessage(TwilioPhoneNumber, destinationPhone, msg); // , gameLinks);
-
-            return response.Body;
+            foreach (var phoneNumber in phoneNumbers)
+            {
+                var r = client.SendMessage(TwilioPhoneNumber, phoneNumber, msg);
+                if (r.RestException != null)
+                {                  
+                    response += String.Format("Exception sending to {0}: {1}\n", phoneNumber, r.RestException.Message);
+                }
+                else
+                {
+                    response += String.Format("Successfully sent to {0}\n", phoneNumber);
+                }
+            }
+            return response;
         }
     }
 }
-#endif
 
