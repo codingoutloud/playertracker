@@ -1,0 +1,17 @@
+﻿@model SportRadarPlayByPlay.Models.GameModel
+@{
+    ViewBag.Title = "Home Page";
+    
+}
+
+<div class="jumbotron">
+    <h1>Hackday sample app</h1>
+    <p class="lead">Player Tracker</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div>@Model.GameDescription:</div>
+        <a href="http://www.mlb.com/r/game?gid=@Model.MLBId&sport_code=mlb">MLB GameDay</a>
+    </div>
+</div>
